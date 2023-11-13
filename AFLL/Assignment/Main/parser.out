@@ -2,237 +2,861 @@ Created by PLY version 3.11 (http://www.dabeaz.com/ply)
 
 Grammar
 
-Rule 0     S' -> declaration
-Rule 1     declaration -> variable_declaration
-Rule 2     declaration -> type_declaration
-Rule 3     variable_declaration -> LET ID optional_assignment SEMICOLON
-Rule 4     variable_declaration -> CONST ID optional_assignment SEMICOLON
-Rule 5     optional_assignment -> EQUAL expression
-Rule 6     optional_assignment -> <empty>
-Rule 7     type_declaration -> ID EQUAL expression SEMICOLON
-Rule 8     expression -> NUMBER
-Rule 9     expression -> STRING
-Rule 10    expression -> BOOLEAN
-Rule 11    expression -> ID
-Rule 12    expression -> ARRAY
+Rule 0     S' -> s
+Rule 1     s -> f bl str con stu br cl st cr
+Rule 2     f -> for
+Rule 3     se -> SEMICOLON
+Rule 4     con -> id le no se
+Rule 5     con -> id gr no se
+Rule 6     con -> id le eq no se
+Rule 7     con -> id gr eq no se
+Rule 8     id -> ID
+Rule 9     eq -> EQUAL
+Rule 10    no -> NUMBER
+Rule 11    cl -> LCURLY
+Rule 12    cr -> RCURLY
+Rule 13    bl -> LPAREN
+Rule 14    br -> RPAREN
+Rule 15    str -> id eq no se
+Rule 16    stu -> id pl pl
+Rule 17    stu -> pl pl id
+Rule 18    stu -> id mi mi
+Rule 19    st -> id eq no se st
+Rule 20    st -> s
+Rule 21    st -> id pl pl se st
+Rule 22    st -> pl pl id se st
+Rule 23    st -> id mi mi se st
+Rule 24    st -> mi mi id se st
+Rule 25    pl -> PLUS
+Rule 26    mi -> MINUS
+Rule 27    st -> <empty>
+Rule 28    gr -> MORE
+Rule 29    le -> LESS
 
 Terminals, with rules where they appear
 
-ARRAY                : 12
-BOOLEAN              : 10
-CONST                : 4
-EQUAL                : 5 7
-ID                   : 3 4 7 11
-LET                  : 3
-NUMBER               : 8
-SEMICOLON            : 3 4 7
-STRING               : 9
+EQUAL                : 9
+ID                   : 8
+LCURLY               : 11
+LESS                 : 29
+LPAREN               : 13
+MINUS                : 26
+MORE                 : 28
+NUMBER               : 10
+PLUS                 : 25
+RCURLY               : 12
+RPAREN               : 14
+SEMICOLON            : 3
 error                : 
+for                  : 2
 
 Nonterminals, with rules where they appear
 
-declaration          : 0
-expression           : 5 7
-optional_assignment  : 3 4
-type_declaration     : 2
-variable_declaration : 1
+bl                   : 1
+br                   : 1
+cl                   : 1
+con                  : 1
+cr                   : 1
+eq                   : 6 7 15 19
+f                    : 1
+gr                   : 5 7
+id                   : 4 5 6 7 15 16 17 18 19 21 22 23 24
+le                   : 4 6
+mi                   : 18 18 23 23 24 24
+no                   : 4 5 6 7 15 19
+pl                   : 16 16 17 17 21 21 22 22
+s                    : 20 0
+se                   : 4 5 6 7 15 19 21 22 23 24
+st                   : 1 19 21 22 23 24
+str                  : 1
+stu                  : 1
 
 Parsing method: LALR
 
 state 0
 
-    (0) S' -> . declaration
-    (1) declaration -> . variable_declaration
-    (2) declaration -> . type_declaration
-    (3) variable_declaration -> . LET ID optional_assignment SEMICOLON
-    (4) variable_declaration -> . CONST ID optional_assignment SEMICOLON
-    (7) type_declaration -> . ID EQUAL expression SEMICOLON
+    (0) S' -> . s
+    (1) s -> . f bl str con stu br cl st cr
+    (2) f -> . for
 
-    LET             shift and go to state 4
-    CONST           shift and go to state 6
-    ID              shift and go to state 5
+    for             shift and go to state 3
 
-    declaration                    shift and go to state 1
-    variable_declaration           shift and go to state 2
-    type_declaration               shift and go to state 3
+    s                              shift and go to state 1
+    f                              shift and go to state 2
 
 state 1
 
-    (0) S' -> declaration .
+    (0) S' -> s .
 
 
 
 state 2
 
-    (1) declaration -> variable_declaration .
+    (1) s -> f . bl str con stu br cl st cr
+    (13) bl -> . LPAREN
 
-    $end            reduce using rule 1 (declaration -> variable_declaration .)
+    LPAREN          shift and go to state 5
 
+    bl                             shift and go to state 4
 
 state 3
 
-    (2) declaration -> type_declaration .
+    (2) f -> for .
 
-    $end            reduce using rule 2 (declaration -> type_declaration .)
+    LPAREN          reduce using rule 2 (f -> for .)
 
 
 state 4
 
-    (3) variable_declaration -> LET . ID optional_assignment SEMICOLON
+    (1) s -> f bl . str con stu br cl st cr
+    (15) str -> . id eq no se
+    (8) id -> . ID
 
-    ID              shift and go to state 7
+    ID              shift and go to state 8
 
+    str                            shift and go to state 6
+    id                             shift and go to state 7
 
 state 5
 
-    (7) type_declaration -> ID . EQUAL expression SEMICOLON
+    (13) bl -> LPAREN .
 
-    EQUAL           shift and go to state 8
+    ID              reduce using rule 13 (bl -> LPAREN .)
 
 
 state 6
 
-    (4) variable_declaration -> CONST . ID optional_assignment SEMICOLON
+    (1) s -> f bl str . con stu br cl st cr
+    (4) con -> . id le no se
+    (5) con -> . id gr no se
+    (6) con -> . id le eq no se
+    (7) con -> . id gr eq no se
+    (8) id -> . ID
 
-    ID              shift and go to state 9
+    ID              shift and go to state 8
 
+    con                            shift and go to state 9
+    id                             shift and go to state 10
 
 state 7
 
-    (3) variable_declaration -> LET ID . optional_assignment SEMICOLON
-    (5) optional_assignment -> . EQUAL expression
-    (6) optional_assignment -> .
+    (15) str -> id . eq no se
+    (9) eq -> . EQUAL
 
-    EQUAL           shift and go to state 11
-    SEMICOLON       reduce using rule 6 (optional_assignment -> .)
+    EQUAL           shift and go to state 12
 
-    optional_assignment            shift and go to state 10
+    eq                             shift and go to state 11
 
 state 8
 
-    (7) type_declaration -> ID EQUAL . expression SEMICOLON
-    (8) expression -> . NUMBER
-    (9) expression -> . STRING
-    (10) expression -> . BOOLEAN
-    (11) expression -> . ID
-    (12) expression -> . ARRAY
+    (8) id -> ID .
 
-    NUMBER          shift and go to state 14
-    STRING          shift and go to state 15
-    BOOLEAN         shift and go to state 16
-    ID              shift and go to state 12
-    ARRAY           shift and go to state 17
+    EQUAL           reduce using rule 8 (id -> ID .)
+    LESS            reduce using rule 8 (id -> ID .)
+    MORE            reduce using rule 8 (id -> ID .)
+    PLUS            reduce using rule 8 (id -> ID .)
+    MINUS           reduce using rule 8 (id -> ID .)
+    RPAREN          reduce using rule 8 (id -> ID .)
+    SEMICOLON       reduce using rule 8 (id -> ID .)
 
-    expression                     shift and go to state 13
 
 state 9
 
-    (4) variable_declaration -> CONST ID . optional_assignment SEMICOLON
-    (5) optional_assignment -> . EQUAL expression
-    (6) optional_assignment -> .
+    (1) s -> f bl str con . stu br cl st cr
+    (16) stu -> . id pl pl
+    (17) stu -> . pl pl id
+    (18) stu -> . id mi mi
+    (8) id -> . ID
+    (25) pl -> . PLUS
 
-    EQUAL           shift and go to state 11
-    SEMICOLON       reduce using rule 6 (optional_assignment -> .)
+    ID              shift and go to state 8
+    PLUS            shift and go to state 16
 
-    optional_assignment            shift and go to state 18
+    stu                            shift and go to state 13
+    id                             shift and go to state 14
+    pl                             shift and go to state 15
 
 state 10
 
-    (3) variable_declaration -> LET ID optional_assignment . SEMICOLON
+    (4) con -> id . le no se
+    (5) con -> id . gr no se
+    (6) con -> id . le eq no se
+    (7) con -> id . gr eq no se
+    (29) le -> . LESS
+    (28) gr -> . MORE
 
-    SEMICOLON       shift and go to state 19
+    LESS            shift and go to state 19
+    MORE            shift and go to state 20
 
+    le                             shift and go to state 17
+    gr                             shift and go to state 18
 
 state 11
 
-    (5) optional_assignment -> EQUAL . expression
-    (8) expression -> . NUMBER
-    (9) expression -> . STRING
-    (10) expression -> . BOOLEAN
-    (11) expression -> . ID
-    (12) expression -> . ARRAY
+    (15) str -> id eq . no se
+    (10) no -> . NUMBER
 
-    NUMBER          shift and go to state 14
-    STRING          shift and go to state 15
-    BOOLEAN         shift and go to state 16
-    ID              shift and go to state 12
-    ARRAY           shift and go to state 17
+    NUMBER          shift and go to state 22
 
-    expression                     shift and go to state 20
+    no                             shift and go to state 21
 
 state 12
 
-    (11) expression -> ID .
+    (9) eq -> EQUAL .
 
-    SEMICOLON       reduce using rule 11 (expression -> ID .)
+    NUMBER          reduce using rule 9 (eq -> EQUAL .)
 
 
 state 13
 
-    (7) type_declaration -> ID EQUAL expression . SEMICOLON
+    (1) s -> f bl str con stu . br cl st cr
+    (14) br -> . RPAREN
 
-    SEMICOLON       shift and go to state 21
+    RPAREN          shift and go to state 24
 
+    br                             shift and go to state 23
 
 state 14
 
-    (8) expression -> NUMBER .
+    (16) stu -> id . pl pl
+    (18) stu -> id . mi mi
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
 
-    SEMICOLON       reduce using rule 8 (expression -> NUMBER .)
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
 
+    pl                             shift and go to state 25
+    mi                             shift and go to state 26
 
 state 15
 
-    (9) expression -> STRING .
+    (17) stu -> pl . pl id
+    (25) pl -> . PLUS
 
-    SEMICOLON       reduce using rule 9 (expression -> STRING .)
+    PLUS            shift and go to state 16
 
+    pl                             shift and go to state 28
 
 state 16
 
-    (10) expression -> BOOLEAN .
+    (25) pl -> PLUS .
 
-    SEMICOLON       reduce using rule 10 (expression -> BOOLEAN .)
+    PLUS            reduce using rule 25 (pl -> PLUS .)
+    ID              reduce using rule 25 (pl -> PLUS .)
+    RPAREN          reduce using rule 25 (pl -> PLUS .)
+    SEMICOLON       reduce using rule 25 (pl -> PLUS .)
 
 
 state 17
 
-    (12) expression -> ARRAY .
+    (4) con -> id le . no se
+    (6) con -> id le . eq no se
+    (10) no -> . NUMBER
+    (9) eq -> . EQUAL
 
-    SEMICOLON       reduce using rule 12 (expression -> ARRAY .)
+    NUMBER          shift and go to state 22
+    EQUAL           shift and go to state 12
 
+    no                             shift and go to state 29
+    eq                             shift and go to state 30
 
 state 18
 
-    (4) variable_declaration -> CONST ID optional_assignment . SEMICOLON
+    (5) con -> id gr . no se
+    (7) con -> id gr . eq no se
+    (10) no -> . NUMBER
+    (9) eq -> . EQUAL
 
-    SEMICOLON       shift and go to state 22
+    NUMBER          shift and go to state 22
+    EQUAL           shift and go to state 12
 
+    no                             shift and go to state 31
+    eq                             shift and go to state 32
 
 state 19
 
-    (3) variable_declaration -> LET ID optional_assignment SEMICOLON .
+    (29) le -> LESS .
 
-    $end            reduce using rule 3 (variable_declaration -> LET ID optional_assignment SEMICOLON .)
+    NUMBER          reduce using rule 29 (le -> LESS .)
+    EQUAL           reduce using rule 29 (le -> LESS .)
 
 
 state 20
 
-    (5) optional_assignment -> EQUAL expression .
+    (28) gr -> MORE .
 
-    SEMICOLON       reduce using rule 5 (optional_assignment -> EQUAL expression .)
+    NUMBER          reduce using rule 28 (gr -> MORE .)
+    EQUAL           reduce using rule 28 (gr -> MORE .)
 
 
 state 21
 
-    (7) type_declaration -> ID EQUAL expression SEMICOLON .
+    (15) str -> id eq no . se
+    (3) se -> . SEMICOLON
 
-    $end            reduce using rule 7 (type_declaration -> ID EQUAL expression SEMICOLON .)
+    SEMICOLON       shift and go to state 34
 
+    se                             shift and go to state 33
 
 state 22
 
-    (4) variable_declaration -> CONST ID optional_assignment SEMICOLON .
+    (10) no -> NUMBER .
 
-    $end            reduce using rule 4 (variable_declaration -> CONST ID optional_assignment SEMICOLON .)
+    SEMICOLON       reduce using rule 10 (no -> NUMBER .)
+
+
+state 23
+
+    (1) s -> f bl str con stu br . cl st cr
+    (11) cl -> . LCURLY
+
+    LCURLY          shift and go to state 36
+
+    cl                             shift and go to state 35
+
+state 24
+
+    (14) br -> RPAREN .
+
+    LCURLY          reduce using rule 14 (br -> RPAREN .)
+
+
+state 25
+
+    (16) stu -> id pl . pl
+    (25) pl -> . PLUS
+
+    PLUS            shift and go to state 16
+
+    pl                             shift and go to state 37
+
+state 26
+
+    (18) stu -> id mi . mi
+    (26) mi -> . MINUS
+
+    MINUS           shift and go to state 27
+
+    mi                             shift and go to state 38
+
+state 27
+
+    (26) mi -> MINUS .
+
+    MINUS           reduce using rule 26 (mi -> MINUS .)
+    RPAREN          reduce using rule 26 (mi -> MINUS .)
+    ID              reduce using rule 26 (mi -> MINUS .)
+    SEMICOLON       reduce using rule 26 (mi -> MINUS .)
+
+
+state 28
+
+    (17) stu -> pl pl . id
+    (8) id -> . ID
+
+    ID              shift and go to state 8
+
+    id                             shift and go to state 39
+
+state 29
+
+    (4) con -> id le no . se
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 40
+
+state 30
+
+    (6) con -> id le eq . no se
+    (10) no -> . NUMBER
+
+    NUMBER          shift and go to state 22
+
+    no                             shift and go to state 41
+
+state 31
+
+    (5) con -> id gr no . se
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 42
+
+state 32
+
+    (7) con -> id gr eq . no se
+    (10) no -> . NUMBER
+
+    NUMBER          shift and go to state 22
+
+    no                             shift and go to state 43
+
+state 33
+
+    (15) str -> id eq no se .
+
+    ID              reduce using rule 15 (str -> id eq no se .)
+
+
+state 34
+
+    (3) se -> SEMICOLON .
+
+    ID              reduce using rule 3 (se -> SEMICOLON .)
+    PLUS            reduce using rule 3 (se -> SEMICOLON .)
+    MINUS           reduce using rule 3 (se -> SEMICOLON .)
+    for             reduce using rule 3 (se -> SEMICOLON .)
+    RCURLY          reduce using rule 3 (se -> SEMICOLON .)
+
+
+state 35
+
+    (1) s -> f bl str con stu br cl . st cr
+    (19) st -> . id eq no se st
+    (20) st -> . s
+    (21) st -> . id pl pl se st
+    (22) st -> . pl pl id se st
+    (23) st -> . id mi mi se st
+    (24) st -> . mi mi id se st
+    (27) st -> .
+    (8) id -> . ID
+    (1) s -> . f bl str con stu br cl st cr
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
+    (2) f -> . for
+
+    RCURLY          reduce using rule 27 (st -> .)
+    ID              shift and go to state 8
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
+    for             shift and go to state 3
+
+    f                              shift and go to state 2
+    st                             shift and go to state 44
+    id                             shift and go to state 45
+    s                              shift and go to state 46
+    pl                             shift and go to state 47
+    mi                             shift and go to state 48
+
+state 36
+
+    (11) cl -> LCURLY .
+
+    ID              reduce using rule 11 (cl -> LCURLY .)
+    PLUS            reduce using rule 11 (cl -> LCURLY .)
+    MINUS           reduce using rule 11 (cl -> LCURLY .)
+    for             reduce using rule 11 (cl -> LCURLY .)
+    RCURLY          reduce using rule 11 (cl -> LCURLY .)
+
+
+state 37
+
+    (16) stu -> id pl pl .
+
+    RPAREN          reduce using rule 16 (stu -> id pl pl .)
+
+
+state 38
+
+    (18) stu -> id mi mi .
+
+    RPAREN          reduce using rule 18 (stu -> id mi mi .)
+
+
+state 39
+
+    (17) stu -> pl pl id .
+
+    RPAREN          reduce using rule 17 (stu -> pl pl id .)
+
+
+state 40
+
+    (4) con -> id le no se .
+
+    ID              reduce using rule 4 (con -> id le no se .)
+    PLUS            reduce using rule 4 (con -> id le no se .)
+
+
+state 41
+
+    (6) con -> id le eq no . se
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 49
+
+state 42
+
+    (5) con -> id gr no se .
+
+    ID              reduce using rule 5 (con -> id gr no se .)
+    PLUS            reduce using rule 5 (con -> id gr no se .)
+
+
+state 43
+
+    (7) con -> id gr eq no . se
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 50
+
+state 44
+
+    (1) s -> f bl str con stu br cl st . cr
+    (12) cr -> . RCURLY
+
+    RCURLY          shift and go to state 52
+
+    cr                             shift and go to state 51
+
+state 45
+
+    (19) st -> id . eq no se st
+    (21) st -> id . pl pl se st
+    (23) st -> id . mi mi se st
+    (9) eq -> . EQUAL
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
+
+    EQUAL           shift and go to state 12
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
+
+    eq                             shift and go to state 53
+    pl                             shift and go to state 54
+    mi                             shift and go to state 55
+
+state 46
+
+    (20) st -> s .
+
+    RCURLY          reduce using rule 20 (st -> s .)
+
+
+state 47
+
+    (22) st -> pl . pl id se st
+    (25) pl -> . PLUS
+
+    PLUS            shift and go to state 16
+
+    pl                             shift and go to state 56
+
+state 48
+
+    (24) st -> mi . mi id se st
+    (26) mi -> . MINUS
+
+    MINUS           shift and go to state 27
+
+    mi                             shift and go to state 57
+
+state 49
+
+    (6) con -> id le eq no se .
+
+    ID              reduce using rule 6 (con -> id le eq no se .)
+    PLUS            reduce using rule 6 (con -> id le eq no se .)
+
+
+state 50
+
+    (7) con -> id gr eq no se .
+
+    ID              reduce using rule 7 (con -> id gr eq no se .)
+    PLUS            reduce using rule 7 (con -> id gr eq no se .)
+
+
+state 51
+
+    (1) s -> f bl str con stu br cl st cr .
+
+    $end            reduce using rule 1 (s -> f bl str con stu br cl st cr .)
+    RCURLY          reduce using rule 1 (s -> f bl str con stu br cl st cr .)
+
+
+state 52
+
+    (12) cr -> RCURLY .
+
+    $end            reduce using rule 12 (cr -> RCURLY .)
+    RCURLY          reduce using rule 12 (cr -> RCURLY .)
+
+
+state 53
+
+    (19) st -> id eq . no se st
+    (10) no -> . NUMBER
+
+    NUMBER          shift and go to state 22
+
+    no                             shift and go to state 58
+
+state 54
+
+    (21) st -> id pl . pl se st
+    (25) pl -> . PLUS
+
+    PLUS            shift and go to state 16
+
+    pl                             shift and go to state 59
+
+state 55
+
+    (23) st -> id mi . mi se st
+    (26) mi -> . MINUS
+
+    MINUS           shift and go to state 27
+
+    mi                             shift and go to state 60
+
+state 56
+
+    (22) st -> pl pl . id se st
+    (8) id -> . ID
+
+    ID              shift and go to state 8
+
+    id                             shift and go to state 61
+
+state 57
+
+    (24) st -> mi mi . id se st
+    (8) id -> . ID
+
+    ID              shift and go to state 8
+
+    id                             shift and go to state 62
+
+state 58
+
+    (19) st -> id eq no . se st
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 63
+
+state 59
+
+    (21) st -> id pl pl . se st
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 64
+
+state 60
+
+    (23) st -> id mi mi . se st
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 65
+
+state 61
+
+    (22) st -> pl pl id . se st
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 66
+
+state 62
+
+    (24) st -> mi mi id . se st
+    (3) se -> . SEMICOLON
+
+    SEMICOLON       shift and go to state 34
+
+    se                             shift and go to state 67
+
+state 63
+
+    (19) st -> id eq no se . st
+    (19) st -> . id eq no se st
+    (20) st -> . s
+    (21) st -> . id pl pl se st
+    (22) st -> . pl pl id se st
+    (23) st -> . id mi mi se st
+    (24) st -> . mi mi id se st
+    (27) st -> .
+    (8) id -> . ID
+    (1) s -> . f bl str con stu br cl st cr
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
+    (2) f -> . for
+
+    RCURLY          reduce using rule 27 (st -> .)
+    ID              shift and go to state 8
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
+    for             shift and go to state 3
+
+    id                             shift and go to state 45
+    st                             shift and go to state 68
+    s                              shift and go to state 46
+    pl                             shift and go to state 47
+    mi                             shift and go to state 48
+    f                              shift and go to state 2
+
+state 64
+
+    (21) st -> id pl pl se . st
+    (19) st -> . id eq no se st
+    (20) st -> . s
+    (21) st -> . id pl pl se st
+    (22) st -> . pl pl id se st
+    (23) st -> . id mi mi se st
+    (24) st -> . mi mi id se st
+    (27) st -> .
+    (8) id -> . ID
+    (1) s -> . f bl str con stu br cl st cr
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
+    (2) f -> . for
+
+    RCURLY          reduce using rule 27 (st -> .)
+    ID              shift and go to state 8
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
+    for             shift and go to state 3
+
+    id                             shift and go to state 45
+    pl                             shift and go to state 47
+    st                             shift and go to state 69
+    s                              shift and go to state 46
+    mi                             shift and go to state 48
+    f                              shift and go to state 2
+
+state 65
+
+    (23) st -> id mi mi se . st
+    (19) st -> . id eq no se st
+    (20) st -> . s
+    (21) st -> . id pl pl se st
+    (22) st -> . pl pl id se st
+    (23) st -> . id mi mi se st
+    (24) st -> . mi mi id se st
+    (27) st -> .
+    (8) id -> . ID
+    (1) s -> . f bl str con stu br cl st cr
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
+    (2) f -> . for
+
+    RCURLY          reduce using rule 27 (st -> .)
+    ID              shift and go to state 8
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
+    for             shift and go to state 3
+
+    id                             shift and go to state 45
+    mi                             shift and go to state 48
+    st                             shift and go to state 70
+    s                              shift and go to state 46
+    pl                             shift and go to state 47
+    f                              shift and go to state 2
+
+state 66
+
+    (22) st -> pl pl id se . st
+    (19) st -> . id eq no se st
+    (20) st -> . s
+    (21) st -> . id pl pl se st
+    (22) st -> . pl pl id se st
+    (23) st -> . id mi mi se st
+    (24) st -> . mi mi id se st
+    (27) st -> .
+    (8) id -> . ID
+    (1) s -> . f bl str con stu br cl st cr
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
+    (2) f -> . for
+
+    RCURLY          reduce using rule 27 (st -> .)
+    ID              shift and go to state 8
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
+    for             shift and go to state 3
+
+    pl                             shift and go to state 47
+    id                             shift and go to state 45
+    st                             shift and go to state 71
+    s                              shift and go to state 46
+    mi                             shift and go to state 48
+    f                              shift and go to state 2
+
+state 67
+
+    (24) st -> mi mi id se . st
+    (19) st -> . id eq no se st
+    (20) st -> . s
+    (21) st -> . id pl pl se st
+    (22) st -> . pl pl id se st
+    (23) st -> . id mi mi se st
+    (24) st -> . mi mi id se st
+    (27) st -> .
+    (8) id -> . ID
+    (1) s -> . f bl str con stu br cl st cr
+    (25) pl -> . PLUS
+    (26) mi -> . MINUS
+    (2) f -> . for
+
+    RCURLY          reduce using rule 27 (st -> .)
+    ID              shift and go to state 8
+    PLUS            shift and go to state 16
+    MINUS           shift and go to state 27
+    for             shift and go to state 3
+
+    mi                             shift and go to state 48
+    id                             shift and go to state 45
+    st                             shift and go to state 72
+    s                              shift and go to state 46
+    pl                             shift and go to state 47
+    f                              shift and go to state 2
+
+state 68
+
+    (19) st -> id eq no se st .
+
+    RCURLY          reduce using rule 19 (st -> id eq no se st .)
+
+
+state 69
+
+    (21) st -> id pl pl se st .
+
+    RCURLY          reduce using rule 21 (st -> id pl pl se st .)
+
+
+state 70
+
+    (23) st -> id mi mi se st .
+
+    RCURLY          reduce using rule 23 (st -> id mi mi se st .)
+
+
+state 71
+
+    (22) st -> pl pl id se st .
+
+    RCURLY          reduce using rule 22 (st -> pl pl id se st .)
+
+
+state 72
+
+    (24) st -> mi mi id se st .
+
+    RCURLY          reduce using rule 24 (st -> mi mi id se st .)
 

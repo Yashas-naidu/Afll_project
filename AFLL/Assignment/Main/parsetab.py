@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ARRAY BOOLEAN CONST EQUAL ID LET NUMBER SEMICOLON STRING\n    declaration : variable_declaration\n                | type_declaration\n    \n    variable_declaration : LET ID optional_assignment SEMICOLON\n                        | CONST ID optional_assignment SEMICOLON\n    \n    optional_assignment : EQUAL expression\n                       | \n    \n    type_declaration : ID EQUAL expression SEMICOLON\n    \n    expression : NUMBER\n               | STRING\n               | BOOLEAN\n               | ID\n               | ARRAY\n    '
+_lr_signature = 'EQUAL ID LCURLY LESS LPAREN MINUS MORE NUMBER PLUS RCURLY RPAREN SEMICOLON fors : f bl str con stu br cl st cr f : forse : SEMICOLONcon : id le no secon : id gr no secon : id le eq no secon : id gr eq no seid : IDeq : EQUALno : NUMBERcl : LCURLYcr : RCURLYbl : LPARENbr : RPARENstr : id eq no se stu : id pl plstu : pl pl idstu : id mi mist : id eq no se stst : sst : id pl pl se stst : pl pl id se stst : id mi mi se stst : mi mi id se stpl : PLUSmi : MINUSst : gr : MOREle : LESS'
     
-_lr_action_items = {'LET':([0,],[4,]),'CONST':([0,],[6,]),'ID':([0,4,6,8,11,],[5,7,9,12,12,]),'$end':([1,2,3,19,21,22,],[0,-1,-2,-3,-7,-4,]),'EQUAL':([5,7,9,],[8,11,11,]),'SEMICOLON':([7,9,10,12,13,14,15,16,17,18,20,],[-6,-6,19,-11,21,-8,-9,-10,-12,22,-5,]),'NUMBER':([8,11,],[14,14,]),'STRING':([8,11,],[15,15,]),'BOOLEAN':([8,11,],[16,16,]),'ARRAY':([8,11,],[17,17,]),}
+_lr_action_items = {'for':([0,34,35,36,63,64,65,66,67,],[3,-3,3,-11,3,3,3,3,3,]),'$end':([1,51,52,],[0,-1,-12,]),'LPAREN':([2,3,],[5,-2,]),'ID':([4,5,6,9,16,27,28,33,34,35,36,40,42,49,50,56,57,63,64,65,66,67,],[8,-13,8,8,-25,-26,8,-15,-3,8,-11,-4,-5,-6,-7,8,8,8,8,8,8,8,]),'EQUAL':([7,8,17,18,19,20,45,],[12,-8,12,12,-29,-28,12,]),'LESS':([8,10,],[-8,19,]),'MORE':([8,10,],[-8,20,]),'PLUS':([8,9,14,15,16,25,34,35,36,40,42,45,47,49,50,54,63,64,65,66,67,],[-8,16,16,16,-25,16,-3,16,-11,-4,-5,16,16,-6,-7,16,16,16,16,16,16,]),'MINUS':([8,14,26,27,34,35,36,45,48,55,63,64,65,66,67,],[-8,27,27,-26,-3,27,-11,27,27,27,27,27,27,27,27,]),'RPAREN':([8,13,16,27,37,38,39,],[-8,24,-25,-26,-16,-18,-17,]),'SEMICOLON':([8,16,21,22,27,29,31,41,43,58,59,60,61,62,],[-8,-25,34,-10,-26,34,34,34,34,34,34,34,34,34,]),'NUMBER':([11,12,17,18,19,20,30,32,53,],[22,-9,22,22,-29,-28,22,22,22,]),'LCURLY':([23,24,],[36,-14,]),'RCURLY':([34,35,36,44,46,51,52,63,64,65,66,67,68,69,70,71,72,],[-3,-27,-11,52,-20,-1,-12,-27,-27,-27,-27,-27,-19,-21,-23,-22,-24,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'declaration':([0,],[1,]),'variable_declaration':([0,],[2,]),'type_declaration':([0,],[3,]),'optional_assignment':([7,9,],[10,18,]),'expression':([8,11,],[13,20,]),}
+_lr_goto_items = {'s':([0,35,63,64,65,66,67,],[1,46,46,46,46,46,46,]),'f':([0,35,63,64,65,66,67,],[2,2,2,2,2,2,2,]),'bl':([2,],[4,]),'str':([4,],[6,]),'id':([4,6,9,28,35,56,57,63,64,65,66,67,],[7,10,14,39,45,61,62,45,45,45,45,45,]),'con':([6,],[9,]),'eq':([7,17,18,45,],[11,30,32,53,]),'stu':([9,],[13,]),'pl':([9,14,15,25,35,45,47,54,63,64,65,66,67,],[15,25,28,37,47,54,56,59,47,47,47,47,47,]),'le':([10,],[17,]),'gr':([10,],[18,]),'no':([11,17,18,30,32,53,],[21,29,31,41,43,58,]),'br':([13,],[23,]),'mi':([14,26,35,45,48,55,63,64,65,66,67,],[26,38,48,55,57,60,48,48,48,48,48,]),'se':([21,29,31,41,43,58,59,60,61,62,],[33,40,42,49,50,63,64,65,66,67,]),'cl':([23,],[35,]),'st':([35,63,64,65,66,67,],[44,68,69,70,71,72,]),'cr':([44,],[51,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,17 +26,34 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> declaration","S'",1,None,None,None),
-  ('declaration -> variable_declaration','declaration',1,'p_declaration','data_type.py',55),
-  ('declaration -> type_declaration','declaration',1,'p_declaration','data_type.py',56),
-  ('variable_declaration -> LET ID optional_assignment SEMICOLON','variable_declaration',4,'p_variable_declaration','data_type.py',61),
-  ('variable_declaration -> CONST ID optional_assignment SEMICOLON','variable_declaration',4,'p_variable_declaration','data_type.py',62),
-  ('optional_assignment -> EQUAL expression','optional_assignment',2,'p_optional_assignment','data_type.py',67),
-  ('optional_assignment -> <empty>','optional_assignment',0,'p_optional_assignment','data_type.py',68),
-  ('type_declaration -> ID EQUAL expression SEMICOLON','type_declaration',4,'p_type_declaration','data_type.py',73),
-  ('expression -> NUMBER','expression',1,'p_expression','data_type.py',78),
-  ('expression -> STRING','expression',1,'p_expression','data_type.py',79),
-  ('expression -> BOOLEAN','expression',1,'p_expression','data_type.py',80),
-  ('expression -> ID','expression',1,'p_expression','data_type.py',81),
-  ('expression -> ARRAY','expression',1,'p_expression','data_type.py',82),
+  ("S' -> s","S'",1,None,None,None),
+  ('s -> f bl str con stu br cl st cr','s',9,'p_s','for_loop.py',39),
+  ('f -> for','f',1,'p_w','for_loop.py',42),
+  ('se -> SEMICOLON','se',1,'p_se','for_loop.py',45),
+  ('con -> id le no se','con',4,'p_con9','for_loop.py',49),
+  ('con -> id gr no se','con',4,'p_con10','for_loop.py',51),
+  ('con -> id le eq no se','con',5,'p_con5','for_loop.py',53),
+  ('con -> id gr eq no se','con',5,'p_con6','for_loop.py',55),
+  ('id -> ID','id',1,'p_id','for_loop.py',59),
+  ('eq -> EQUAL','eq',1,'p_eq','for_loop.py',62),
+  ('no -> NUMBER','no',1,'p_no','for_loop.py',65),
+  ('cl -> LCURLY','cl',1,'p_cl','for_loop.py',68),
+  ('cr -> RCURLY','cr',1,'p_cr','for_loop.py',71),
+  ('bl -> LPAREN','bl',1,'p_bl','for_loop.py',74),
+  ('br -> RPAREN','br',1,'p_br','for_loop.py',77),
+  ('str -> id eq no se','str',4,'p_str1','for_loop.py',80),
+  ('stu -> id pl pl','stu',3,'p_stu4','for_loop.py',83),
+  ('stu -> pl pl id','stu',3,'p_stu5','for_loop.py',85),
+  ('stu -> id mi mi','stu',3,'p_stu6','for_loop.py',87),
+  ('st -> id eq no se st','st',5,'p_st1','for_loop.py',90),
+  ('st -> s','st',1,'p_st3','for_loop.py',94),
+  ('st -> id pl pl se st','st',5,'p_st4','for_loop.py',97),
+  ('st -> pl pl id se st','st',5,'p_st5','for_loop.py',99),
+  ('st -> id mi mi se st','st',5,'p_st6','for_loop.py',101),
+  ('st -> mi mi id se st','st',5,'p_st7','for_loop.py',103),
+  ('pl -> PLUS','pl',1,'p_pl','for_loop.py',105),
+  ('mi -> MINUS','mi',1,'p_plm','for_loop.py',107),
+  ('st -> <empty>','st',0,'p_st8','for_loop.py',110),
+  ('gr -> MORE','gr',1,'p_gr','for_loop.py',115),
+  ('le -> LESS','le',1,'p_le','for_loop.py',118),
 ]
