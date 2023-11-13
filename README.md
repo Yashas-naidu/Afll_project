@@ -1,4 +1,6 @@
-# Afll_project
+# Typescript Syntax Validation
+
+###	for loop,switch,if-else,do-while,while loop
 
 # While Loop
 
