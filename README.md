@@ -73,6 +73,7 @@ b--;str
 ## Format
 
 `switch(expression){case expression1:{statement;break;} case expression2:{statement;break;} default:{statement;break;}}`
+#wtf is going on here 
 
 ### Valid cases
 
